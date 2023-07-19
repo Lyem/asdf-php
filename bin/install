@@ -101,7 +101,7 @@ install_php() {
 
 install_composer() {
   local bin_path=$1/bin
-  local expected_signature="$(curl -sL https://composer.github.io/installer.sig --insecure)"
+  local expected_signature="$(curl -sLk https://composer.github.io/installer.sig)"
 
   $bin_path/php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
   $bin_path/php -r "if (hash_file('sha384', 'composer-setup.php') === '${expected_signature}') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
@@ -367,7 +367,7 @@ download_source() {
   local download_url=$(get_download_url $install_type $version)
 
   # curl -Lo $download_path -C - $download_url
-  curl -Lo $download_path $download_url
+  curl -Lok $download_path $download_url
 }
 
 get_download_file_path() {
